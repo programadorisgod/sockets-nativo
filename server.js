@@ -5,13 +5,15 @@ const server = new Server()
 
 const END = "END"
 
+/**Aquí colocamos a que el server escuche cuando un cliente se conecte */
 server.on("connection", (socket) => {
+
   console.log('New connection from', socket.remoteAddress)
-
+   
   const remoteSocket = `${socket.remoteAddress}:${socket.remotePort}`
-
+  
   socket.setEncoding("utf-8")
-
+  /** Cuando el cliente nos mande mensajes, preguntaremos si es de finalizar, sino, con el metodo write le respondemos */
   socket.on('data', (data) => {
     const message = data.toString().trim()
 
@@ -26,7 +28,7 @@ server.on("connection", (socket) => {
     }
   })
 
-
+/** En caso de que se salga sin enviar la palabra END  */
   socket.on('close', () => {
     console.log('Client off', remoteSocket)
   })
